@@ -48,12 +48,12 @@ public class PasswordValidator extends LinearLayout {
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                defaultValidate(pw);
             }
         });
     }
 
-        public void validate(String pw){
+        public int defaultValidate(String pw){
 
             boolean len = false;
             boolean uc = false;
@@ -80,7 +80,9 @@ public class PasswordValidator extends LinearLayout {
             }else{
                 grade = 0;
             }
+            return grade;
     }
+
 
 
 
