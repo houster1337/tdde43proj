@@ -4,7 +4,9 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,23 +19,31 @@ public class PasswordValidator extends LinearLayout {
     private TextView output;
     private String pw;
     private int grade;
+    private PasswordStrengthMeter passwordStrengthMeter;
+    private Validator validator;
 
 
     public PasswordValidator(Context context) {
         super(context);
+        setUpUI();
     }
 
     public PasswordValidator(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        setUpUI();
     }
 
     public PasswordValidator(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setUpUI();
     }
 
     public void setUpUI() {
-        input = findViewById(R.id.pwfield);
-        output = findViewById(R.id.pwgrad);
+        View layout = LayoutInflater.from(getContext())
+                .inflate(R.layout.password_validator,(ViewGroup) getParent());
+
+        input = layout.findViewById(R.id.pwfield);
+        output = layout.findViewById(R.id.pwgrad);
         pw = input.toString();
         input.addTextChangedListener(new TextWatcher() {
             @Override
@@ -48,32 +58,42 @@ public class PasswordValidator extends LinearLayout {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                defaultValidate(pw);
+                System.out.println("asdf");
+               passwordStrengthMeter = new PasswordStrengthMeter(defaultValidate(pw), output);
+
             }
         });
+
+        addView(layout);
+
     }
 
         public int defaultValidate(String pw){
 
             boolean len = false;
             boolean uc = false;
+            boolean lc = false;
             boolean num = false;
 
             if(pw.length() > 8){
                 len = true;
                 for(int i = 0; i<pw.length(); i++){
                     char a = pw.charAt(i);
-                    if(Character.isUpperCase(a)){
+                    if(Character.isUpperCase(a)) {
+
                         uc = true;
+                    }
                         if(Character.isDigit(a)){
                             num = true;
                         }
+                        if(Character.isLowerCase(a)){
+                            lc = true;
+                        }
                     }
-                }
         }
-            if (len && uc && num){
+            if (len && uc && num && lc){
                 grade = 3;
-            } else if(len && uc || len && num || num && uc){
+            } else if(len && uc && lc || len && num && lc || num && uc && lc){
                 grade = 2;
             } else if(len || uc || num) {
                 grade = 1;
@@ -84,7 +104,7 @@ public class PasswordValidator extends LinearLayout {
     }
 
 
-
-
-
+    public void setValidator(Validator validator) {
+        this.validator = validator;
+    }
 }
