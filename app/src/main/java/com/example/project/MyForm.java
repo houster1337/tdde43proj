@@ -59,19 +59,22 @@ public class MyForm extends LinearLayout {
     public List<String> getData(){
         List<String> s = new ArrayList<String>();
         for(Field f : list){
-            s.add(f.getDataManip().getValue(field));
+            if (f.getDataManip().validate(f.getView()))
+                 s.add(f.getDataManip().getValue(f.getView()));
+            else
+                f.notValid();
+                s.add(null);
         }
         System.out.println(s);
         return s;
-
     }
-
 
     /**
      * Lets the user add logic to a certain field.
      * @param field Field that should be modified.
      */
     public void addLogic(Field field){
+
 
     }
 }

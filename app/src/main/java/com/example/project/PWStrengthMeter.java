@@ -18,7 +18,6 @@ public class PWStrengthMeter extends LinearLayout implements PasswordValidatorLi
 
     private EditText input;
     private TextView output;
-    private String pw;
     private int grade;
     private MyGUI myGUI;
     private PasswordValidator passwordValidator;
@@ -91,9 +90,9 @@ public class PWStrengthMeter extends LinearLayout implements PasswordValidatorLi
      */
     @Override
     public boolean isValid() {
-        if (grade >= 2)
+        if (grade >= 2) {
             return true;
-        else return false;
+        }
+        else {return false;}
     }
-
 }

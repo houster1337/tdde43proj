@@ -18,11 +18,9 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //final PWStrengthMeter pw = findViewById(R.id.pwval);
-        //pw.setDataManip(new PasswordValidator());
-
         myForm = findViewById(R.id.myForm);
         defaultForm();
+
         Button button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,21 +32,25 @@ public class MainActivity extends AppCompatActivity{
 
 
     /**
-     * Test
+     * Test form
+     * Creates fields for username, email, password and checkbox.
      */
     public void defaultForm(){
 
-
         final View usernameV = new EditText(this);
-        Field name = new Field(this, "Username", usernameV, new DataManip() {
+        final Field name = new Field(this, "Username", usernameV, new DataManip() {
             @Override
             public boolean validate(View v) {
-                return false;
+                if (((EditText)v).getText().length() > 6)
+                    return true;
+                else {
+                    return false;
+                }
             }
             @Override
             public String getValue(View v) {
 
-                    return ((EditText) usernameV).getText().toString();
+                return ((EditText) usernameV).getText().toString();
             }
         });
 
@@ -60,7 +62,8 @@ public class MainActivity extends AppCompatActivity{
         final Field password = new Field(this, "Password", pwStrengthMeter, new DataManip() {
             @Override
             public boolean validate(View v) {
-                return pwStrengthMeter.isValid();
+
+                return ((PWStrengthMeter)v).isValid(); // FUNKAR EJ, FIXAAAAA
             }
             @Override
             public String getValue(View vv) {
@@ -76,12 +79,12 @@ public class MainActivity extends AppCompatActivity{
         Field email = new Field(this, "Email", emailV, new DataManip() {
             @Override
             public boolean validate(View v) {
+                //insert validateEmail();
+                return true;
 
-                return false;
             }
             @Override
             public String getValue(View v) {
-
                 return ((EditText) emailV).getText().toString();
             }
         });
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity{
         Field checkBox = new Field(this, "Terms and Conditions", checkBoxV, new DataManip() {
             @Override
             public boolean validate(View v) {
+                //insert isChecked();
                 return true;
             }
             @Override

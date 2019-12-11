@@ -1,23 +1,17 @@
 package com.example.project;
 
 import android.content.Context;
-import android.graphics.Canvas;
+import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 
 public class Field extends LinearLayout{
     private View view;
     private String label;
-    private Context context;
-    private EditText editText;
-    private MainActivity mainActivity;
+    private TextView textView;
 
     public DataManip getDataManip() {
         return dataManip;
@@ -58,7 +52,7 @@ public class Field extends LinearLayout{
      */
     public void init(){
         this.setOrientation(LinearLayout.VERTICAL);
-        final TextView textView = new TextView(getContext());
+        textView = new TextView(getContext());
         textView.setText(label);
         textView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         view.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -67,4 +61,15 @@ public class Field extends LinearLayout{
 
     }
 
+    public View getView() {
+        return view;
+    }
+
+    public void setView(View view) {
+        this.view = view;
+    }
+
+    public void notValid(){
+        this.textView.setTextColor(Color.RED);
+    }
 }
