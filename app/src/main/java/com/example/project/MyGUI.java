@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 public class MyGUI{
 
-    private int defaultValidate;
     private TextView output;
     String pwGrade;
     Context context;
@@ -27,6 +26,12 @@ public class MyGUI{
 
     }
 
+
+    /**
+     * Decides text and color for progressbar.
+     * Fills up the progressbar depending on the grade.
+     * @param grade Return statement from password algorithm.
+     */
     public void validate(int grade){
         switch(grade) {
             case 4:
@@ -39,12 +44,17 @@ public class MyGUI{
                 setText("Fair", "#F742D2");
                 break;
             case 1:
-                setText("Weak", "#F70000");
+                setText("Minimum 8 characters", "#F70000");
                 break;
         }
         progressBar.setProgress(grade);
     }
 
+    /**
+     * Sets text and color for the progressbar/message.
+     * @param text Output message.
+     * @param color Output color.
+     */
     public void setText(String text, String color){
         output.setTextColor(Color.parseColor(color));
         output.setText(text);

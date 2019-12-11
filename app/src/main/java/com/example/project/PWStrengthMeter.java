@@ -14,16 +14,17 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-public class PWStrengthMeter extends LinearLayout {
+public class PWStrengthMeter extends LinearLayout implements PasswordValidatorListener {
 
     private EditText input;
     private TextView output;
     private String pw;
     private int grade;
     private MyGUI myGUI;
-    private Validator validator;
+    private PasswordValidator passwordValidator;
     private String pw2;
     private ProgressBar progressBar;
+    private DataManip dataManip;
 
 
     public PWStrengthMeter(Context context) {
@@ -41,41 +42,58 @@ public class PWStrengthMeter extends LinearLayout {
         setUpUI();
     }
 
+    /**
+     * Reads from xml file and adds listener to the password field.
+     */
     public void setUpUI() {
         View layout = LayoutInflater.from(getContext())
-                .inflate(R.layout.password_validator,(ViewGroup) getParent());
+                .inflate(R.layout.password_validator, (ViewGroup) getParent());
 
         input = layout.findViewById(R.id.pwfield);
         output = layout.findViewById(R.id.pwgrad);
         progressBar = layout.findViewById(R.id.progressBar);
-
-       // pw = input.toString();
-
         input.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
-                int grade = validator.validate(editable.toString());
+                int grade = passwordValidator.validate(editable.toString());
                 myGUI = new MyGUI(grade, output, progressBar);
-
             }
         });
-
         addView(layout);
-
     }
 
-    public void setValidator(Validator validator) {
-        this.validator = validator;
+    /**
+     * Sets validator to the Password Strength Meter.
+     *
+     * @param passwordValidator Our default password validator. Can be changed and/or modified.
+     */
+    public void setDataManip(PasswordValidator passwordValidator) {
+        this.passwordValidator = passwordValidator;
+    }
+
+
+    /**
+     * @return the password as a String.
+     */
+    public String getPassword() {
+        return input.getText().toString();
+    }
+
+    /**
+     * Lets the user decide requirements for a valid password.
+     * @return true if requirements are met.
+     */
+    @Override
+    public boolean isValid() {
+        if (grade >= 2)
+            return true;
+        else return false;
     }
 
 }
