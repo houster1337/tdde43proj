@@ -6,17 +6,13 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 
-public class Field extends LinearLayout{
+public class Field extends LinearLayout {
     private View view;
     private String label;
     private TextView textView;
-
-    public DataManip getDataManip() {
-        return dataManip;
-    }
-
     private DataManip dataManip;
 
     public Field(Context context) {
@@ -31,7 +27,6 @@ public class Field extends LinearLayout{
         if (view != null) {
             init();
         }
-
     }
 
     public Field(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -50,7 +45,7 @@ public class Field extends LinearLayout{
     /**
      * Creates a TextView with a given label next to the view and adds them both to the form.
      */
-    public void init(){
+    public void init() {
         this.setOrientation(LinearLayout.VERTICAL);
         textView = new TextView(getContext());
         textView.setText(label);
@@ -58,18 +53,25 @@ public class Field extends LinearLayout{
         view.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         addView(view);
         addView(textView);
+    }
 
+
+    public DataManip getDataManip() {
+        return dataManip;
     }
 
     public View getView() {
         return view;
     }
 
-    public void setView(View view) {
-        this.view = view;
+
+    /**
+     * Sets color depending on if field is validated or not.
+     *
+     * @param color (e.g. Color.BLACK)
+     */
+    public void setColor(int color) {
+        this.textView.setTextColor(color);
     }
 
-    public void notValid(){
-        this.textView.setTextColor(Color.RED);
-    }
 }

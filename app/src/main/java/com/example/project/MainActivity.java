@@ -10,9 +10,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
-   private MyForm myForm;
+    private MyForm myForm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,26 +36,24 @@ public class MainActivity extends AppCompatActivity{
      * Test form
      * Creates fields for username, email, password and checkbox.
      */
-    public void defaultForm(){
+    public void defaultForm() {
 
         final View usernameV = new EditText(this);
         final Field name = new Field(this, "Username", usernameV, new DataManip() {
             @Override
             public boolean validate(View v) {
-                if (((EditText)v).getText().length() > 6)
+                if (((EditText) v).getText().length() > 6)
                     return true;
                 else {
                     return false;
                 }
             }
+
             @Override
             public String getValue(View v) {
-
                 return ((EditText) usernameV).getText().toString();
             }
         });
-
-
 
 
         final PWStrengthMeter pwStrengthMeter = new PWStrengthMeter(this);
@@ -63,8 +62,9 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public boolean validate(View v) {
 
-                return ((PWStrengthMeter)v).isValid(); // FUNKAR EJ, FIXAAAAA
+                return pwStrengthMeter.isValid();
             }
+
             @Override
             public String getValue(View vv) {
                 return pwStrengthMeter.getPassword();
@@ -72,23 +72,21 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
-
-
         final EditText emailV = new EditText(this);
         emailV.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         Field email = new Field(this, "Email", emailV, new DataManip() {
             @Override
             public boolean validate(View v) {
-                //insert validateEmail();
-                return true;
-
+                if (((EditText) v).getText().toString().contains("@") && ((EditText) v).getText().length() > 6) {
+                    return true;
+                } else return false;
             }
+
             @Override
             public String getValue(View v) {
                 return ((EditText) emailV).getText().toString();
             }
         });
-
 
 
         View checkBoxV = new CheckBox(this);
@@ -98,6 +96,7 @@ public class MainActivity extends AppCompatActivity{
                 //insert isChecked();
                 return true;
             }
+
             @Override
             public String getValue(View v) {
                 return null;

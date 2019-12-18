@@ -16,14 +16,13 @@ import androidx.annotation.Nullable;
 
 public class PWStrengthMeter extends LinearLayout implements PasswordValidatorListener {
 
+    private int grade;
     private EditText input;
     private TextView output;
-    private int grade;
     private MyGUI myGUI;
     private PasswordValidator passwordValidator;
-    private String pw2;
     private ProgressBar progressBar;
-    private DataManip dataManip;
+    //private DataManip dataManip;
 
 
     public PWStrengthMeter(Context context) {
@@ -60,7 +59,7 @@ public class PWStrengthMeter extends LinearLayout implements PasswordValidatorLi
             }
             @Override
             public void afterTextChanged(Editable editable) {
-                int grade = passwordValidator.validate(editable.toString());
+                grade = passwordValidator.validate(editable.toString());
                 myGUI = new MyGUI(grade, output, progressBar);
             }
         });

@@ -1,19 +1,13 @@
 package com.example.project;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MyGUI{
 
     private TextView output;
-    String pwGrade;
-    Context context;
     int grade;
     private ProgressBar progressBar;
 
@@ -23,7 +17,6 @@ public class MyGUI{
         this.output = output;
         this.progressBar = progressBar;
         validate(grade);
-
     }
 
 
@@ -61,6 +54,5 @@ public class MyGUI{
         progressBar.getProgressDrawable().setColorFilter(
                  Color.parseColor(color), android.graphics.PorterDuff.Mode.SRC_IN);
     }
-
 }
 
